@@ -178,7 +178,7 @@ type ProjectBaseOptions struct {
 	Limit int `url:"n,omitempty"`
 
 	// Skip the given number of branches from the beginning of the list.
-	Skip string `url:"s,omitempty"`
+	Skip string `url:"S,omitempty"`
 }
 
 // ProjectOptions specifies the parameters to the ProjectsService.ListProjects.
