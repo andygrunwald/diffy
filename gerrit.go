@@ -279,8 +279,10 @@ func (c *Client) NewRawPutRequest(ctx context.Context, urlStr string, body strin
 
 	// Request compact JSON
 	// See https://gerrit-review.googlesource.com/Documentation/rest-api.html#output
-	req.Header.Add("Accept", "application/json")
-	req.Header.Add("Content-Type", "application/x-www-form-urlencoded")
+	// req.Header.Add("Accept", "application/json")
+	// req.Header.Add("Content-Type", "application/x-www-form-urlencoded")
+	req.Header.Add("Accept", "*/*")
+	req.Header.Add("Content-Type", "text/plain")
 
 	// TODO: Add gzip encoding
 	// Accept-Encoding request header is set to gzip
