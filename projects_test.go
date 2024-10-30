@@ -267,3 +267,28 @@ func TestProjectsService_GetBranch(t *testing.T) {
 		}
 	}
 }
+
+func TestProjectsService_SetConfig(t *testing.T) {
+	setup()
+	defer teardown()
+
+	var configInput gerrit.ConfigInput
+
+	// test server url
+	instance := "https://gerrit-test.uniontech.com/"
+	client, err := gerrit.NewClient(instance, nil)
+	if err != nil {
+		panic(err)
+	}
+
+	// login username and password
+	client.Authentication.SetBasicAuth("", "")
+
+	configInput.Description = "test change description"
+
+	_, _, err = client.Projects.SetConfig("my-test", &configInput)
+	if err != nil {
+		t.Errorf("Projects.SetConfig returned error: %v", err)
+	}
+
+}
