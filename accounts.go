@@ -453,6 +453,27 @@ func (s *AccountsService) GetSSHKey(ctx context.Context, accountID, sshKeyID str
 	return v, resp, err
 }
 
+// AddSSHKey adds an SSH key to a user's account.
+// Gerrit API docs: https://gerrit-review.googlesource.com/Documentation/rest-api-accounts.html#add-ssh-key
+func (s *AccountsService) AddSSHKey(ctx context.Context, accountID string, SSHKey string) (*SSHKeyInfo, *Response, error) {
+	u := fmt.Sprintf("accounts/%s/sshkeys", accountID)
+
+	req, err := s.client.NewRequest(ctx, "POST", u, SSHKey)
+	if err != nil {
+		return nil, nil, err
+	}
+
+	req.Header.Set("Content-Type", "text/plain")
+
+	var keyInfo SSHKeyInfo
+	resp, err := s.client.Do(req, &keyInfo)
+	if err != nil {
+		return nil, resp, err
+	}
+
+	return &keyInfo, resp, nil
+}
+
 // ListGPGKeys returns the GPG keys of an account.
 //
 // Gerrit API docs: https://gerrit-review.googlesource.com/Documentation/rest-api-accounts.html#list-gpg-keys
@@ -957,6 +978,5 @@ func (s *AccountsService) UnstarChange(ctx context.Context, accountID, changeID 
 
 /*
 Missing Account Endpoints:
-	Add SSH Key
 	Get Avatar
 */
