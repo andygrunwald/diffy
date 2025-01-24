@@ -456,20 +456,20 @@ func (s *AccountsService) GetSSHKey(ctx context.Context, accountID, sshKeyID str
 // AddSSHKey adds an SSH key to a user's account.
 // Gerrit API docs: https://gerrit-review.googlesource.com/Documentation/rest-api-accounts.html#add-ssh-key
 func (s *AccountsService) AddSSHKey(ctx context.Context, accountID string, SSHKey string) (*SSHKeyInfo, *Response, error) {
-    u := fmt.Sprintf("accounts/%s/sshkeys", accountID)
+	u := fmt.Sprintf("accounts/%s/sshkeys", accountID)
 
-    req, err := s.client.NewRequest(ctx, "POST", u, SSHKey)
-    if err != nil {
-        return nil, nil, err
-    }
+	req, err := s.client.NewRequest(ctx, "POST", u, SSHKey)
+	if err != nil {
+		return nil, nil, err
+	}
 
 	req.Header.Set("Content-Type", "text/plain")
 
-    var keyInfo SSHKeyInfo
-    resp, err := s.client.Do(req, &keyInfo)
-    if err != nil {
-        return nil, resp, err
-    }
+	var keyInfo SSHKeyInfo
+	resp, err := s.client.Do(req, &keyInfo)
+	if err != nil {
+		return nil, resp, err
+	}
 
 	return &keyInfo, resp, nil
 }

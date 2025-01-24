@@ -5,46 +5,9 @@ import (
 	"fmt"
 	"io"
 	"net/http"
-	"net/http/httptest"
 	"strings"
 	"testing"
-
-	"github.com/andygrunwald/go-gerrit"
 )
-
-const (
-	// testGerritInstanceURL is a test instance url that won`t be called
-	testGerritInstanceURL = "https://go-review.googlesource.com/"
-)
-
-var (
-	// testMux is the HTTP request multiplexer used with the test server.
-	testMux *http.ServeMux
-
-	// testClient is the gerrit client being tested.
-	testClient *gerrit.Client
-
-	// testServer is a test HTTP server used to provide mock API responses.
-	testServer *httptest.Server
-)
-
-type testValues map[string]string
-
-// setup sets up a test HTTP server along with a gerrit.Client that is configured to talk to that test server.
-// Tests should register handlers on mux which provide mock responses for the API method being tested.
-func setup() {
-	// Test server
-	testMux = http.NewServeMux()
-	testServer = httptest.NewServer(testMux)
-
-	// gerrit client configured to use test server
-	testClient, _ = gerrit.NewClient(context.Background(), testServer.URL, nil)
-}
-
-// teardown closes the test HTTP server.
-func teardown() {
-	testServer.Close()
-}
 
 // TestAddSSHKey tests the addition of an SSH key to an account.
 func TestAddSSHKey(t *testing.T) {
