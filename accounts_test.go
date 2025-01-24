@@ -1,4 +1,4 @@
-package gerrit
+package gerrit_test
 
 import (
 	"context"
